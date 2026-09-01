@@ -1,89 +1,93 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, wire } from 'lwc';
+import { getListRecordsByName } from 'lightning/uiListsApi';
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class OmnishiftTodayQueue extends LightningElement {
-    greeting = 'Good morning';
-    workCountLabel = 'Today you should work 17 people';
+// Reads the Growth Agent - Today list view directly. No Apex: getListRecordsByName is
+// a standard wire adapter, so the queue respects sharing and field-level security.
+export default class OmnishiftTodayQueue extends NavigationMixin(LightningElement) {
+    records;
+    error;
 
-    scoreboard = [
-        { id: 's1', label: 'Due now', value: '6' },
-        { id: 's2', label: 'SLA risk', value: '2' },
-        { id: 's3', label: 'Referrals', value: '3' },
-        { id: 's4', label: 'Quarantine', value: '1' }
-    ];
-
-    // SAMPLE rows — Pamela Whitaker fictional case + peers (no Claire-vs-Gus matching)
-    rows = [
-        {
-            id: 'r1',
-            name: 'Pamela Whitaker',
-            reason: 'Website SLA · Family office page 2h ago',
-            tag: 'SLA',
-            tagClass: 'tag tag_red',
-            action: 'Call today',
-            detail: 'VisitIQ journey: Home → Team → Family office'
-        },
-        {
-            id: 'r2',
-            name: 'Marcus Chen',
-            reason: 'Website SLA · Contact form unanswered 4h',
-            tag: 'SLA',
-            tagClass: 'tag tag_red',
-            action: 'Call / email',
-            detail: 'Inbound web lead — response SLA breached'
-        },
-        {
-            id: 'r3',
-            name: 'Elena Rostova',
-            reason: 'Referral · skip-ranker (partner intro)',
-            tag: 'Referral',
-            tagClass: 'tag tag_blue',
-            action: 'Call referrer first',
-            detail: 'Skip normal rank — warm intro from RIA partner'
-        },
-        {
-            id: 'r4',
-            name: 'John & Deana Hale',
-            reason: '$10M+ household rule · joint decision',
-            tag: '$10M+',
-            tagClass: 'tag tag_gold',
-            action: 'Schedule joint call',
-            detail: 'Rule: involve both spouses before proposal'
-        },
-        {
-            id: 'r5',
-            name: 'Theo Nakamura',
-            reason: 'Quarantine · incomplete KYC packet',
-            tag: 'Quarantine',
-            tagClass: 'tag tag_gray',
-            action: 'Hold outreach',
-            detail: 'Do not contact until compliance clears docs'
-        },
-        {
-            id: 'r6',
-            name: 'Sofia Alvarez',
-            reason: 'Life event · equity vest window',
-            tag: 'Signal',
-            tagClass: 'tag tag_green',
-            action: 'Call this week',
-            detail: 'Sample WealthFeed-style event (not live)'
-        },
-        {
-            id: 'r7',
-            name: 'David Okonkwo',
-            reason: 'Referral · skip-ranker (COI)',
-            tag: 'Referral',
-            tagClass: 'tag tag_blue',
-            action: 'Thank + book',
-            detail: 'Attorney COI — prioritize acknowledgment'
-        },
-        {
-            id: 'r8',
-            name: 'Priya Desai',
-            reason: 'Re-engage · dormant 180d + site visit',
-            tag: 'Re-engage',
-            tagClass: 'tag tag_green',
-            action: 'Soft email',
-            detail: 'Approved template only — SAMPLE queue'
+    @wire(getListRecordsByName, {
+        objectApiName: 'Lead',
+        listViewApiName: 'Omnishift_Today',
+        fields: [
+            'Lead.Name',
+            'Lead.Company',
+            'Lead.Omnishift_Rank__c',
+            'Lead.Omnishift_Score__c',
+            'Lead.Omnishift_Why_Now__c',
+            'Lead.Omnishift_Compliance_Status__c',
+            'Lead.Omnishift_Disposition__c'
+        ],
+        sortBy: ['Lead.Omnishift_Rank__c'],
+        pageSize: 25
+    })
+    wiredList({ data, error }) {
+        if (data) {
+            this.records = (data.records && data.records.records) || [];
+            this.error = undefined;
+        } else if (error) {
+            this.error = error;
+            this.records = undefined;
         }
-    ];
+    }
+
+    get isLoading() {
+        return !this.records && !this.error;
+    }
+    get hasError() {
+        return Boolean(this.error);
+    }
+    get isEmpty() {
+        return Boolean(this.records) && this.records.length === 0;
+    }
+    get hasRows() {
+        return Boolean(this.records) && this.records.length > 0;
+    }
+    get count() {
+        return this.records ? this.records.length : 0;
+    }
+    get headline() {
+        const n = this.count;
+        return n === 1 ? 'Today you should work 1 person' : `Today you should work ${n} people`;
+    }
+
+    get rows() {
+        if (!this.records) return [];
+        return this.records.map((r) => {
+            const f = r.fields;
+            const v = (k) =>
+                f[k] ? (f[k].displayValue !== null && f[k].displayValue !== undefined ? f[k].displayValue : f[k].value) : '';
+            const status = f.Omnishift_Compliance_Status__c
+                ? f.Omnishift_Compliance_Status__c.value
+                : null;
+            const rank = f.Omnishift_Rank__c ? f.Omnishift_Rank__c.value : null;
+            return {
+                id: r.id,
+                rank: rank === null ? '--' : String(rank).padStart(2, '0'),
+                name: v('Name'),
+                company: v('Company'),
+                score: v('Omnishift_Score__c'),
+                whyNow: v('Omnishift_Why_Now__c'),
+                status: status || 'Not checked',
+                done: Boolean(f.Omnishift_Disposition__c && f.Omnishift_Disposition__c.value),
+                statusClass:
+                    status === 'Blocked'
+                        ? 'badge badge_error'
+                        : status === 'Flagged'
+                        ? 'badge badge_warning'
+                        : status === 'Auto-corrected'
+                        ? 'badge badge_info'
+                        : 'badge badge_success'
+            };
+        });
+    }
+
+    handleOpen(event) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: { recordId: event.currentTarget.dataset.id, objectApiName: 'Lead', actionName: 'view' }
+        });
+    }
 }

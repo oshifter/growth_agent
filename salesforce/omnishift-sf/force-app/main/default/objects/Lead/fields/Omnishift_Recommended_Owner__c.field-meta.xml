@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Omnishift_Recommended_Owner__c</fullName>
+    <label>Omnishift Recommended Owner</label>
+    <description>Advisory only. Never write OwnerId in bulk - ownership changes force sharing recalculation across the role hierarchy.</description>
+    <type>Lookup</type><referenceTo>User</referenceTo>
+    <relationshipLabel>Omnishift Recommended Leads</relationshipLabel>
+    <relationshipName>Omnishift_Recommended_Leads</relationshipName>
+    <required>false</required><deleteConstraint>SetNull</deleteConstraint>
+</CustomField>

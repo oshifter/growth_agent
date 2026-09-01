@@ -1,142 +1,146 @@
 <template>
-    <lightning-card title="Omnishift" icon-name="custom:custom63">
-        <div class="slds-p-horizontal_medium slds-p-bottom_medium panel">
-            <!-- Identity strip -->
-            <div class="identity slds-m-bottom_medium">
-                <div class="identity__head">
-                    <span class="identity__name">{sampleName}</span>
-                    <lightning-badge label="SAMPLE DATA" class="slds-m-left_small"></lightning-badge>
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="utility:sparkles" size="small"></lightning-icon>
                 </div>
-                <p class="identity__sub slds-text-body_small">{sampleSubtitle}</p>
-                <lightning-layout multiple-rows class="slds-m-top_x-small">
-                    <template for:each={identityStrip} for:item="row">
-                        <lightning-layout-item key={row.id} size="6" small-device-size="6" medium-device-size="3" padding="around-xx-small">
-                            <div class="id-pill">
-                                <span class="id-pill__label">{row.label}</span>
-                                <span class="id-pill__value">{row.value}</span>
-                            </div>
-                        </lightning-layout-item>
-                    </template>
-                </lightning-layout>
-            </div>
-
-            <!-- Recommended action -->
-            <div class="reco slds-m-bottom_medium">
-                <p class="section-label">Recommended action</p>
-                <div class="reco__action">
-                    <lightning-badge label={recommendedAction} class="reco-badge"></lightning-badge>
-                    <span class="slds-text-body_small slds-m-left_small">Priority · Call window open</span>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span class="slds-text-heading_small">Growth Agent</span>
+                    </h2>
                 </div>
-            </div>
-
-            <!-- Why Now -->
-            <div class="slds-m-bottom_medium">
-                <p class="section-label">Why Now</p>
-                <div class="chip-row">
-                    <template for:each={whyNowItems} for:item="chip">
-                        <span key={chip.id} class={chip.className}>{chip.label}</span>
-                    </template>
+            </header>
+            <template if:true={isScored}>
+                <div class="slds-no-flex">
+                    <span class="slds-text-body_small slds-text-color_weak">
+                        Scored {scoredOn}
+                    </span>
                 </div>
-            </div>
+            </template>
+        </div>
 
-            <!-- 2018 note -->
-            <div class="note-box slds-m-bottom_medium">
-                <p class="section-label">Historical note</p>
-                <p class="slds-text-body_regular">{note2018}</p>
-            </div>
+        <div class="slds-card__body slds-card__body_inner slds-p-bottom_medium">
 
-            <!-- VisitIQ journey -->
-            <div class="slds-m-bottom_medium">
-                <p class="section-label">VisitIQ journey (SAMPLE)</p>
-                <div class="journey">
-                    <template for:each={journeyItems} for:item="step">
-                        <div key={step.id} class={step.className}>
-                            <strong>{step.label}</strong>
-                            <span class="slds-text-body_small">{step.detail}</span>
+            <template if:true={isLoading}>
+                <div class="slds-align_absolute-center slds-p-vertical_large">
+                    <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={hasError}>
+                <div class="slds-scoped-notification slds-media slds-media_center slds-theme_error" role="alert">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="utility:error" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <p>Can't read Growth Agent fields on this record. Check field-level security.</p>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={notScored}>
+                <div class="slds-align_absolute-center slds-p-vertical_large slds-text-align_center">
+                    <div>
+                        <h3 class="slds-text-heading_small slds-m-bottom_xx-small">Not on today's list</h3>
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            Growth Agent didn't surface this record in the last run.
+                            It'll be reconsidered tonight.
+                        </p>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={isScored}>
+                <!-- rank + score -->
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                    <span class="slds-badge slds-badge_inverse slds-m-right_x-small">Rank {rank}</span>
+                    <span class="slds-text-body_small slds-text-color_weak">
+                        Score {score} &middot; run {runId}
+                    </span>
+                </div>
+
+                <!-- why now -->
+                <p class="slds-text-title_caps slds-m-bottom_xx-small">Why now</p>
+                <p class="slds-text-body_regular slds-m-bottom_medium">{whyNow}</p>
+
+                <!-- assignment + timing -->
+                <div class="slds-box slds-box_x-small slds-m-bottom_medium">
+                    <p class="slds-text-body_small">
+                        <span class="slds-text-color_weak">Best fit:</span> <strong>{recommendedOwner}</strong>
+                    </p>
+                    <p class="slds-text-body_small slds-text-color_weak">
+                        Recommended action date: {nextActionDate}
+                    </p>
+                </div>
+
+                <!-- compliance -->
+                <div class={complianceTheme} style="border-radius:.25rem;padding:.5rem .75rem;margin-bottom:.75rem">
+                    <div class="slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name={complianceIcon} size="x-small" variant="inverse"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-body_small">Compliance: {complianceStatus}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- draft -->
+                <template if:true={draftSubject}>
+                    <lightning-button
+                        label={draftButtonLabel}
+                        variant="neutral"
+                        onclick={toggleDraft}
+                        class="slds-m-bottom_x-small"
+                    ></lightning-button>
+                    <template if:true={showDraft}>
+                        <div class="slds-box slds-box_xx-small slds-m-bottom_medium">
+                            <p class="slds-text-body_small slds-m-bottom_xx-small">
+                                <strong>{draftSubject}</strong>
+                            </p>
+                            <lightning-formatted-text value={draftBody}></lightning-formatted-text>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                Insert this into the standard Send Email action via the Growth Agent
+                                email template, then review and send.
+                            </p>
                         </div>
                     </template>
-                </div>
-            </div>
-
-            <!-- Talk track -->
-            <div class="slds-m-bottom_medium">
-                <p class="section-label">Talk track</p>
-                <p class="talk-track">{talkTrack}</p>
-            </div>
-
-            <!-- Compliance -->
-            <div class="slds-m-bottom_medium">
-                <p class="section-label">Compliance checks</p>
-                <ul class="slds-list_dotted compliance">
-                    <template for:each={complianceItems} for:item="check">
-                        <li key={check.id}>
-                            <lightning-icon icon-name={check.icon} size="xx-small" alternative-text={check.variant} class="slds-m-right_xx-small"></lightning-icon>
-                            {check.label}
-                        </li>
-                    </template>
-                </ul>
-            </div>
-
-            <!-- Draft email -->
-            <div class="slds-m-bottom_medium">
-                <lightning-button
-                    label={draftButtonLabel}
-                    variant="neutral"
-                    onclick={handleToggleDraft}
-                    class="slds-m-bottom_x-small"
-                ></lightning-button>
-                <template if:true={showDraft}>
-                    <pre class="draft-box">{draftEmail}</pre>
                 </template>
-            </div>
 
-            <!-- Disposition buttons -->
-            <div class="slds-m-bottom_small">
-                <p class="section-label">Disposition</p>
-                <div class="disp-row">
-                    <lightning-button
-                        label="Call logged"
-                        variant="brand"
-                        data-disposition="Call logged"
-                        onclick={handleDisposition}
-                        disabled={isSaving}
-                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
-                    ></lightning-button>
-                    <lightning-button
-                        label="Send approved email"
-                        variant="brand-outline"
-                        data-disposition="Send approved email"
-                        onclick={handleDisposition}
-                        disabled={isSaving}
-                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
-                    ></lightning-button>
-                    <lightning-button
-                        label="Snooze"
-                        variant="neutral"
-                        data-disposition="Snooze"
-                        onclick={handleDisposition}
-                        disabled={isSaving}
-                        class="slds-m-right_xx-small slds-m-bottom_xx-small"
-                    ></lightning-button>
-                    <lightning-button
-                        label="Wrong person"
-                        variant="destructive-text"
-                        data-disposition="Wrong person"
-                        onclick={handleDisposition}
-                        disabled={isSaving}
-                        class="slds-m-bottom_xx-small"
-                    ></lightning-button>
-                </div>
-                <template if:true={lastDisposition}>
-                    <p class="slds-text-body_small slds-m-top_x-small last-disp">
-                        Last saved: {lastDisposition}
-                    </p>
+                <!-- last disposition -->
+                <template if:true={hasDisposition}>
+                    <div class="slds-box slds-box_xx-small slds-m-bottom_small">
+                        <p class="slds-text-body_small">
+                            Last recorded: <strong>{lastDisposition}</strong>
+                        </p>
+                        <template if:true={dispositionReason}>
+                            <p class="slds-text-body_small slds-text-color_weak">{dispositionReason}</p>
+                        </template>
+                    </div>
                 </template>
-            </div>
-
-            <p class="footer-note slds-text-body_small">
-                Engine preview · sample data · Phase 1 — not wired to WealthFeed / VisitIQ yet.
-            </p>
+            </template>
         </div>
-    </lightning-card>
+
+        <template if:true={isScored}>
+            <footer class="slds-card__footer">
+                <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
+                    <template for:each={actions} for:item="a">
+                        <lightning-button
+                            key={a.key}
+                            label={a.label}
+                            variant={a.variant}
+                            disabled={a.disabled}
+                            data-disposition={a.key}
+                            onclick={handleDisposition}
+                            class="slds-m-right_xx-small slds-m-bottom_xx-small"
+                        ></lightning-button>
+                    </template>
+                </div>
+                <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                    Each button writes the disposition, logs the activity and sets the next action date. The disposition is the training label.
+                </p>
+            </footer>
+        </template>
+    </article>
 </template>

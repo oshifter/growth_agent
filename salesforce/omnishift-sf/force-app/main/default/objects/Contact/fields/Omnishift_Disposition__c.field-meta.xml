@@ -2,7 +2,18 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Omnishift_Disposition__c</fullName>
     <label>Omnishift Disposition</label>
-    <length>80</length>
-    <type>Text</type>
+    <description>What the user did with the Growth Agent recommendation. This is the training label - it must be a restricted picklist so the values stay reportable and cannot drift.</description>
+    <type>Picklist</type>
     <required>false</required>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Approved and sent</fullName><default>false</default><label>Approved and sent</label></value>
+            <value><fullName>Edited before send</fullName><default>false</default><label>Edited before send</label></value>
+            <value><fullName>Call logged</fullName><default>false</default><label>Call logged</label></value>
+            <value><fullName>Snoozed</fullName><default>false</default><label>Snoozed</label></value>
+            <value><fullName>Wrong person</fullName><default>false</default><label>Wrong person</label></value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>
