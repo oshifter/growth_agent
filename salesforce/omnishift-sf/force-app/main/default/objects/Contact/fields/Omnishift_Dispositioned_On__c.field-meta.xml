@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Omnishift_Dispositioned_On__c</fullName>
+    <label>Omnishift Dispositioned On</label>
+    <type>DateTime</type>
+    <required>false</required>
+    <description>When the advisor acted. LastModifiedDate cannot answer this because the nightly run rewrites it, so no trend over time is measurable without this field.</description>
+</CustomField>

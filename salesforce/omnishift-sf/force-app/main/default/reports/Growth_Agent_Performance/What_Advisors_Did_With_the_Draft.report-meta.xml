@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>Donut</chartType>
+        <enableHoverLabels>true</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Lead.Omnishift_Disposition__c</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <location>CHART_TOP</location>
+        <showPercentage>true</showPercentage>
+        <showTotal>true</showTotal>
+        <showValues>true</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <title>Outcome mix, worked recommendations</title>
+    </chart>
+    <columns>
+        <field>Lead.Omnishift_Rank__c</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <columns>
+        <field>COMPANY</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>Lead.Omnishift_Score__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Recommended_Owner__c</field>
+    </columns>
+    <description>The disposition mix across every recommendation an advisor actually worked. Sent-as-written is the good outcome; rewritten says the drafting is off; wrong person says the underlying record is off.</description>
+    <filter>
+        <criteriaItems>
+            <column>Lead.Omnishift_Rank__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead.Omnishift_Disposition__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Omnishift_Disposition__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>What Advisors Did With the Draft</name>
+    <reportType>LeadList</reportType>
+    <scope>org</scope>
+    <showDetails>false</showDetails>
+</Report>

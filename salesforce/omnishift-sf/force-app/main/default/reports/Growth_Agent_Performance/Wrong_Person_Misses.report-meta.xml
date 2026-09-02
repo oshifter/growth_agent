@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Lead.Omnishift_Rank__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Score__c</field>
+    </columns>
+    <columns>
+        <field>FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <columns>
+        <field>COMPANY</field>
+    </columns>
+    <columns>
+        <field>TITLE</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Why_Now__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Disposition_Reason__c</field>
+    </columns>
+    <description>Every prospect an advisor marked as the wrong person to contact. This is a data-quality list, not a model list: read the reasons together and they usually point at one broken thing, such as household mapping or a stale title.</description>
+    <filter>
+        <criteriaItems>
+            <column>Lead.Omnishift_Disposition__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Wrong person</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Omnishift_Recommended_Owner__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Wrong Person: Who We Should Not Contact</name>
+    <reportType>LeadList</reportType>
+    <scope>org</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Lead.Omnishift_Rank__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+</Report>

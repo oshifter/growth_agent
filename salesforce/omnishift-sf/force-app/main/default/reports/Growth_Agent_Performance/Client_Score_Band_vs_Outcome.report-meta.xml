@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_Client_Score_Band</developerName>
+        <masterLabel>Score Band</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Contact.Omnishift_Score__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>50</to>
+            </sourceValues>
+            <value>49 and below</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>50</from>
+                <to>60</to>
+            </sourceValues>
+            <value>50 to 59</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>60</from>
+                <to>70</to>
+            </sourceValues>
+            <value>60 to 69</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>70</from>
+                <to>80</to>
+            </sourceValues>
+            <value>70 to 79</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>80</from>
+            </sourceValues>
+            <value>80 and above</value>
+        </values>
+    </buckets>
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>HorizontalBarStackedTo100</chartType>
+        <enableHoverLabels>true</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>BucketField_Client_Score_Band</groupingColumn>
+        <legendPosition>Bottom</legendPosition>
+        <location>CHART_TOP</location>
+        <secondaryGroupingColumn>Contact.Omnishift_Disposition__c</secondaryGroupingColumn>
+        <showAxisLabels>true</showAxisLabels>
+        <showValues>false</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <title>Client outcome mix by score band</title>
+    </chart>
+    <columns>
+        <field>Contact.Omnishift_Rank__c</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <description>The same test of the ranking, run on existing clients. If the score is only informative on prospects and flat on clients, the model is really scoring newness rather than opportunity.</description>
+    <filter>
+        <criteriaItems>
+            <column>Contact.Omnishift_Rank__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Contact.Omnishift_Disposition__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_Client_Score_Band</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>Working the Top of the Client List</name>
+    <reportType>ContactList</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+</Report>

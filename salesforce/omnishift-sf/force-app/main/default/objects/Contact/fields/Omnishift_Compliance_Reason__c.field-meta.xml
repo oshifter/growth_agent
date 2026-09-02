@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Omnishift_Compliance_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Omnishift Compliance Reason</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+    <description>Why the compliance check reached its status. Written by the nightly run. Kept separate from the disposition reason, which belongs to the advisor.</description>
+</CustomField>

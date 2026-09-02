@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Confidence__c</fullName>
+    <label>Confidence</label>
+    <type>Percent</type>
+    <precision>5</precision>
+    <scale>2</scale>
+    <description>How sure the provider is. A weak match on a common name should not move a score as much as a filed public record.</description>
+</CustomField>

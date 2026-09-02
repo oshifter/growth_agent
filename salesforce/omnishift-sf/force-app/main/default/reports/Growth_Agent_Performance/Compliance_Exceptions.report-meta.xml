@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Lead.Omnishift_Rank__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Score__c</field>
+    </columns>
+    <columns>
+        <field>FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <columns>
+        <field>COMPANY</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Recommended_Owner__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Compliance_Reason__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Draft_Subject__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Omnishift_Disposition__c</field>
+    </columns>
+    <description>Drafts the compliance check would not clear on its own. Flagged needs a principal to read it; blocked cannot be sent at all until it is rewritten. This list should be short and should not age.</description>
+    <filter>
+        <criteriaItems>
+            <column>Lead.Omnishift_Compliance_Status__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Flagged,Blocked</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Omnishift_Compliance_Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Compliance Exceptions Awaiting Review</name>
+    <reportType>LeadList</reportType>
+    <scope>org</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Lead.Omnishift_Rank__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+</Report>

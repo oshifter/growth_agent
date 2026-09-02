@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dashboard xmlns="http://soap.sforce.com/2006/04/metadata">
+    <backgroundEndColor>#FFFFFF</backgroundEndColor>
+    <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
+    <backgroundStartColor>#FFFFFF</backgroundStartColor>
+    <dashboardGridLayout>
+        <dashboardGridComponents>
+            <colSpan>3</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                    <componentType>Metric</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Prospects surfaced by the nightly run</footer>
+                    <header>Prospect recommendations produced</header>
+                    <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                    <indicatorBreakpoint2>1.0</indicatorBreakpoint2>
+                    <indicatorHighColor>#16325C</indicatorHighColor>
+                    <indicatorLowColor>#16325C</indicatorLowColor>
+                    <indicatorMiddleColor>#16325C</indicatorMiddleColor>
+                    <metricLabel>Surfaced</metricLabel>
+                    <report>Growth_Agent_Performance/Recommendations_Produced</report>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>2</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>3</colSpan>
+            <columnIndex>3</columnIndex>
+            <dashboardComponent>
+                    <componentType>Metric</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Recommendations with a disposition recorded</footer>
+                    <header>Prospects worked by an advisor</header>
+                    <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                    <indicatorBreakpoint2>1.0</indicatorBreakpoint2>
+                    <indicatorHighColor>#16325C</indicatorHighColor>
+                    <indicatorLowColor>#16325C</indicatorLowColor>
+                    <indicatorMiddleColor>#16325C</indicatorMiddleColor>
+                    <metricLabel>Worked</metricLabel>
+                    <report>Growth_Agent_Performance/What_Advisors_Did_With_the_Draft</report>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>2</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>3</colSpan>
+            <columnIndex>6</columnIndex>
+            <dashboardComponent>
+                    <componentType>Metric</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>No advisor has dispositioned these yet</footer>
+                    <header>Top prospects untouched</header>
+                    <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                    <indicatorBreakpoint2>1.0</indicatorBreakpoint2>
+                    <indicatorHighColor>#16325C</indicatorHighColor>
+                    <indicatorLowColor>#16325C</indicatorLowColor>
+                    <indicatorMiddleColor>#16325C</indicatorMiddleColor>
+                    <metricLabel>Untouched</metricLabel>
+                    <report>Growth_Agent_Performance/Top_Recommendations_Not_Worked</report>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>2</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>3</colSpan>
+            <columnIndex>9</columnIndex>
+            <dashboardComponent>
+                    <componentType>Metric</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Flagged or blocked and not yet cleared</footer>
+                    <header>Prospect compliance exceptions</header>
+                    <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                    <indicatorBreakpoint2>1.0</indicatorBreakpoint2>
+                    <indicatorHighColor>#16325C</indicatorHighColor>
+                    <indicatorLowColor>#16325C</indicatorLowColor>
+                    <indicatorMiddleColor>#16325C</indicatorMiddleColor>
+                    <metricLabel>Exceptions</metricLabel>
+                    <report>Growth_Agent_Performance/Compliance_Exceptions</report>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>2</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>7</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>BarStacked100</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Outcome mix within each score band. Top bands should look different from the bottom.</footer>
+                    <header>Are advisors working the top of the list?</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/Score_Band_vs_Outcome</report>
+                    <sortBy>RowLabelAscending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>2</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>5</colSpan>
+            <columnIndex>7</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>Bar</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Sent and called should sit clearly above snoozed, wrong person and untouched.</footer>
+                    <header>Average score behind each outcome</header>
+                    <report>Growth_Agent_Performance/Average_Score_by_Outcome</report>
+                    <sortBy>RowValueDescending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>2</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>Donut</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>The disposition mix across every worked recommendation</footer>
+                    <header>Prospects: what advisors did</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/What_Advisors_Did_With_the_Draft</report>
+                    <sortBy>RowValueDescending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>6</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>4</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>Donut</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Of the emails that went out, the share rewritten before send</footer>
+                    <header>Draft quality: how often we rewrite</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/Draft_Edit_Rate</report>
+                    <sortBy>RowValueDescending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>6</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>8</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>Donut</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>What the compliance check did before an advisor saw the draft</footer>
+                    <header>Prospects: compliance outcomes</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/Compliance_Outcomes</report>
+                    <sortBy>RowValueDescending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>6</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>5</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>Bar</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>How much the agent is asking of each advisor</footer>
+                    <header>Prospect volume by advisor</header>
+                    <report>Growth_Agent_Performance/Recommendation_Volume_by_Advisor</report>
+                    <sortBy>RowValueDescending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>10</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>7</colSpan>
+            <columnIndex>5</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>BarStacked</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Each advisor's queue split by what they did with it</footer>
+                    <header>Prospect decisions by advisor</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/Outreach_Decisions_by_Advisor</report>
+                    <sortBy>RowValueDescending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>10</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>6</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                    <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                    <componentType>Table</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Highest ranked prospects with no disposition recorded</footer>
+                    <header>Top prospects nobody has worked</header>
+                    <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                    <indicatorBreakpoint2>1.0</indicatorBreakpoint2>
+                    <indicatorHighColor>#16325C</indicatorHighColor>
+                    <indicatorLowColor>#16325C</indicatorLowColor>
+                    <indicatorMiddleColor>#16325C</indicatorMiddleColor>
+                    <maxValuesDisplayed>10</maxValuesDisplayed>
+                    <report>Growth_Agent_Performance/Top_Recommendations_Not_Worked</report>
+            </dashboardComponent>
+            <rowIndex>14</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>6</colSpan>
+            <columnIndex>6</columnIndex>
+            <dashboardComponent>
+                    <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                    <componentType>Table</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Flagged needs a principal; blocked cannot be sent until rewritten</footer>
+                    <header>Prospect compliance exceptions to review</header>
+                    <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                    <indicatorBreakpoint2>1.0</indicatorBreakpoint2>
+                    <indicatorHighColor>#16325C</indicatorHighColor>
+                    <indicatorLowColor>#16325C</indicatorLowColor>
+                    <indicatorMiddleColor>#16325C</indicatorMiddleColor>
+                    <maxValuesDisplayed>10</maxValuesDisplayed>
+                    <report>Growth_Agent_Performance/Compliance_Exceptions</report>
+            </dashboardComponent>
+            <rowIndex>14</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>6</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                    <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                    <componentType>Table</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>A data-quality list. Read the reasons together, not one at a time.</footer>
+                    <header>Wrong person: prospects we should not surface</header>
+                    <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                    <indicatorBreakpoint2>1.0</indicatorBreakpoint2>
+                    <indicatorHighColor>#16325C</indicatorHighColor>
+                    <indicatorLowColor>#16325C</indicatorLowColor>
+                    <indicatorMiddleColor>#16325C</indicatorMiddleColor>
+                    <maxValuesDisplayed>10</maxValuesDisplayed>
+                    <report>Growth_Agent_Performance/Wrong_Person_Misses</report>
+            </dashboardComponent>
+            <rowIndex>18</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>6</colSpan>
+            <columnIndex>6</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>BarStacked</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>The closest read on meetings produced. Only meaningful as a trend.</footer>
+                    <header>Where worked prospects sit in the funnel</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/Outreach_to_Funnel</report>
+                    <sortBy>RowLabelAscending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>18</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                    <componentType>Metric</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Existing clients surfaced by the same nightly run</footer>
+                    <header>Client recommendations produced</header>
+                    <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+                    <indicatorBreakpoint2>1.0</indicatorBreakpoint2>
+                    <indicatorHighColor>#16325C</indicatorHighColor>
+                    <indicatorLowColor>#16325C</indicatorLowColor>
+                    <indicatorMiddleColor>#16325C</indicatorMiddleColor>
+                    <metricLabel>Surfaced</metricLabel>
+                    <report>Growth_Agent_Performance/Client_Recommendations_Produced</report>
+            </dashboardComponent>
+            <rowIndex>22</rowIndex>
+            <rowSpan>2</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>Donut</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Compare against the prospect mix - a higher wrong-person rate here points at household data</footer>
+                    <header>Clients: what advisors did</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/Client_Disposition_Mix</report>
+                    <sortBy>RowValueDescending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>24</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>4</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>BarStacked100</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Does the score carry information on existing clients, or only on prospects?</footer>
+                    <header>Working the top of the client list</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/Client_Score_Band_vs_Outcome</report>
+                    <sortBy>RowLabelAscending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>24</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>8</columnIndex>
+            <dashboardComponent>
+                    <chartAxisRange>Auto</chartAxisRange>
+                    <componentType>Donut</componentType>
+                    <drillEnabled>true</drillEnabled>
+                    <footer>Client outreach carries different disclosure obligations from prospecting</footer>
+                    <header>Clients: compliance outcomes</header>
+                    <legendPosition>Bottom</legendPosition>
+                    <report>Growth_Agent_Performance/Client_Compliance_Outcomes</report>
+                    <sortBy>RowValueDescending</sortBy>
+                    <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>24</rowIndex>
+            <rowSpan>4</rowSpan>
+        </dashboardGridComponents>
+        <numberOfColumns>12</numberOfColumns>
+        <rowHeight>60</rowHeight>
+    </dashboardGridLayout>
+    <dashboardType>SpecifiedUser</dashboardType>
+    <description>Is the Growth Agent working? Volume first, then the evidence the ranking is real, then draft and data quality, then who is doing the work.</description>
+    <isGridLayout>true</isGridLayout>
+    <textColor>#16325C</textColor>
+    <title>Growth Agent: Is It Working?</title>
+    <titleColor>#16325C</titleColor>
+    <titleSize>14</titleSize>
+</Dashboard>

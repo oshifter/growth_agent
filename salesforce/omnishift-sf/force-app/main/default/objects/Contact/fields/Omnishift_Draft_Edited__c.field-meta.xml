@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Omnishift_Draft_Edited__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>Omnishift Draft Edited</label>
+    <type>Checkbox</type>
+    <description>Set when an advisor saves an edit. The nightly run leaves an edited draft alone, because regenerating it would throw away their work.</description>
+</CustomField>

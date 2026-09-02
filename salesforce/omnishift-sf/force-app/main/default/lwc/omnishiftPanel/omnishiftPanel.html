@@ -58,6 +58,11 @@
                     <span class="slds-text-body_small slds-text-color_weak">
                         Score {score} &middot; run {runId}
                     </span>
+                    <template if:true={inQueue}>
+                        <span class="slds-text-body_small slds-text-color_weak slds-m-left_x-small">
+                            &middot; {queuePosition}
+                        </span>
+                    </template>
                 </div>
 
                 <!-- why now -->
@@ -82,6 +87,9 @@
                         </div>
                         <div class="slds-media__body">
                             <p class="slds-text-body_small">Compliance: {complianceStatus}</p>
+                            <template if:true={complianceReason}>
+                                <p class="slds-text-body_small">{complianceReason}</p>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -96,14 +104,50 @@
                     ></lightning-button>
                     <template if:true={showDraft}>
                         <div class="slds-box slds-box_xx-small slds-m-bottom_medium">
-                            <p class="slds-text-body_small slds-m-bottom_xx-small">
-                                <strong>{draftSubject}</strong>
-                            </p>
-                            <lightning-formatted-text value={draftBody}></lightning-formatted-text>
-                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
-                                Insert this into the standard Send Email action via the Growth Agent
-                                email template, then review and send.
-                            </p>
+
+                            <!-- reading -->
+                            <template if:false={isEditing}>
+                                <p class="slds-text-body_small slds-m-bottom_xx-small">
+                                    <strong>{workingSubject}</strong>
+                                </p>
+                                <lightning-formatted-text value={workingBody}></lightning-formatted-text>
+                            </template>
+
+                            <!-- editing -->
+                            <template if:true={isEditing}>
+                                <lightning-input
+                                    label="Subject"
+                                    value={workingSubject}
+                                    data-field="subject"
+                                    onchange={handleDraftChange}
+                                    class="slds-m-bottom_x-small"
+                                ></lightning-input>
+                                <lightning-textarea
+                                    label="Message"
+                                    value={workingBody}
+                                    data-field="body"
+                                    onchange={handleDraftChange}
+                                ></lightning-textarea>
+                                <div class="slds-m-top_x-small">
+                                    <lightning-button
+                                        label="Save draft"
+                                        variant="brand"
+                                        disabled={isSaving}
+                                        onclick={handleSaveDraft}
+                                        class="slds-m-right_xx-small"
+                                    ></lightning-button>
+                                    <lightning-button
+                                        label="Cancel"
+                                        onclick={handleCancelEdit}
+                                    ></lightning-button>
+                                </div>
+                            </template>
+
+                            <template if:false={isEditing}>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                    {sendModeNote}
+                                </p>
+                            </template>
                         </div>
                     </template>
                 </template>
@@ -124,6 +168,46 @@
 
         <template if:true={isScored}>
             <footer class="slds-card__footer">
+                <template if:true={showSnooze}>
+                    <div class="snooze slds-m-bottom_small">
+                        <p class="slds-text-title_caps slds-m-bottom_xx-small">Come back to this</p>
+                        <lightning-combobox
+                            label="When"
+                            value={snoozeChoice}
+                            options={snoozeOptions}
+                            onchange={handleSnoozeChoice}
+                        ></lightning-combobox>
+                        <template if:true={snoozeIsCustom}>
+                            <lightning-input
+                                type="date"
+                                label="Date"
+                                min={todayIso}
+                                value={snoozeCustomIso}
+                                onchange={handleSnoozeDate}
+                                class="slds-m-top_x-small"
+                            ></lightning-input>
+                            <template if:true={snoozeIsPast}>
+                                <p class="slds-text-body_small slds-text-color_error slds-m-top_xx-small" role="alert">
+                                    That date has passed. Pick today or later.
+                                </p>
+                            </template>
+                        </template>
+                        <div class="slds-m-top_x-small">
+                            <lightning-button
+                                label={snoozeConfirmLabel}
+                                variant="brand"
+                                disabled={snoozeConfirmDisabled}
+                                onclick={handleConfirmSnooze}
+                                class="slds-m-right_xx-small"
+                            ></lightning-button>
+                            <lightning-button
+                                label="Cancel"
+                                onclick={handleCancelSnooze}
+                            ></lightning-button>
+                        </div>
+                    </div>
+                </template>
+
                 <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
                     <template for:each={actions} for:item="a">
                         <lightning-button
@@ -138,8 +222,35 @@
                     </template>
                 </div>
                 <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
-                    Each button writes the disposition, logs the activity and sets the next action date. The disposition is the training label.
+                    Approve and send checks compliance again before anything leaves. Every button logs what happened and sets the next action date.
                 </p>
+
+                <template if:true={inQueue}>
+                    <div class="queue-nav slds-m-top_small">
+                        <template if:true={hasNext}>
+                            <lightning-button
+                                label={nextLabel}
+                                variant={nextVariant}
+                                icon-name="utility:chevronright"
+                                icon-position="right"
+                                onclick={handleNext}
+                            ></lightning-button>
+                            <span class="slds-text-body_small slds-text-color_weak slds-m-left_x-small">
+                                Goes straight to the next person, without going back to the queue.
+                            </span>
+                        </template>
+                        <template if:true={atQueueEnd}>
+                            <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">
+                                Last one on today's list.
+                            </span>
+                            <lightning-button
+                                label="Back to today's queue"
+                                variant={nextVariant}
+                                onclick={handleBackToQueue}
+                            ></lightning-button>
+                        </template>
+                    </div>
+                </template>
             </footer>
         </template>
     </article>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_Live_Email__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>Send Live Email</label>
+    <type>Checkbox</type>
+    <description>When off, Approve and send records the outreach as a completed activity without delivering anything. Off in every org until the firm has signed off on archiving and deliverability.</description>
+</CustomField>

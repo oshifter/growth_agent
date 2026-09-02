@@ -13,6 +13,8 @@
     font: inherit;
 }
 .qrow:hover { background: #f3f3f3; }
+/* The row is the only way into a record, so keyboard users need to see where they are. */
+.qrow:focus-visible { outline: 2px solid #0176d3; outline-offset: -2px; background: #f3f3f3; }
 .qrow__rank { font-size: 11px; color: #5c5c5c; font-weight: 700; }
 .qrow__name { display: block; font-size: 13px; font-weight: 600; }
 .qrow__meta { display: block; font-size: 11px; color: #5c5c5c; }
@@ -28,3 +30,12 @@
 .badge_info    { background: #eef4ff; color: #0176d3; }
 .badge_warning { background: #fffbeb; color: #a8620a; }
 .badge_error   { background: #fef2f2; color: #ea001e; }
+
+/* Every non-row state renders in the same column so the card does not jump
+   between loading, empty and error. */
+.state-block { max-width: 24rem; }
+.state-detail {
+    font-size: 11px;
+    font-family: monospace;
+    word-break: break-word;
+}

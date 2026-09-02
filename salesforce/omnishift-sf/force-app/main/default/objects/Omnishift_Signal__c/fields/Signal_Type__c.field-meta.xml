@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Signal_Type__c</fullName>
+    <label>Signal Type</label>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Business sale</fullName><default>false</default><label>Business sale</label></value>
+            <value><fullName>Liquidity event</fullName><default>false</default><label>Liquidity event</label></value>
+            <value><fullName>Role change</fullName><default>false</default><label>Role change</label></value>
+            <value><fullName>Property transaction</fullName><default>false</default><label>Property transaction</label></value>
+            <value><fullName>Inheritance filing</fullName><default>false</default><label>Inheritance filing</label></value>
+            <value><fullName>Retirement</fullName><default>false</default><label>Retirement</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

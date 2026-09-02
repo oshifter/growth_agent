@@ -19,8 +19,15 @@
         </div>
         <div class="slds-card__body">
             <template if:true={isLoading}>
-                <div class="slds-align_absolute-center slds-p-vertical_large">
-                    <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+                <div class="slds-align_absolute-center slds-p-vertical_large slds-text-align_center" aria-busy="true">
+                    <div class="state-block">
+                        <lightning-spinner alternative-text="Loading today's list" size="small" variant="brand"></lightning-spinner>
+                        <template if:true={slow}>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_medium" role="status">
+                                Still waiting on the {listLabel} list view. Nothing has been read yet, so this is not an empty queue.
+                            </p>
+                        </template>
+                    </div>
                 </div>
             </template>
 
@@ -31,19 +38,63 @@
                             <lightning-icon icon-name="utility:error" size="small" variant="inverse"></lightning-icon>
                         </div>
                         <div class="slds-media__body">
-                            <p>Can't read the Growth Agent &ndash; Today list view. Check that it exists and you have access.</p>
+                            <p>Can't read the {listLabel} list view, so nothing is being shown. This is not an empty queue.</p>
+                            <p class="state-detail slds-m-top_xx-small">{errorDetail}</p>
+                            <p class="slds-m-top_xx-small">Check that the list view exists and that you have access to it, then try again.</p>
                         </div>
+                    </div>
+                    <div class="slds-m-top_x-small">
+                        <lightning-button
+                            label="Reload to check again"
+                            onclick={handleRetry}
+                            disabled={isRefreshing}
+                        ></lightning-button>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={isUnreadable}>
+                <div class="slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_warning" role="alert">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:warning" size="small"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p>
+                                The {listLabel} list view answered at {checkedAt}, but not with rows this
+                                component recognises. There may well be leads waiting, so treat the queue as
+                                unknown rather than clear.
+                            </p>
+                            <p class="slds-m-top_xx-small">
+                                Open the list view directly to work today's leads, and tell an admin the
+                                Today queue response no longer matches what the component reads.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slds-m-top_x-small">
+                        <lightning-button
+                            label="Reload to check again"
+                            onclick={handleRetry}
+                            disabled={isRefreshing}
+                        ></lightning-button>
                     </div>
                 </div>
             </template>
 
             <template if:true={isEmpty}>
                 <div class="slds-align_absolute-center slds-p-vertical_large slds-text-align_center">
-                    <div>
+                    <div class="state-block" role="status">
                         <h3 class="slds-text-heading_small">Queue clear</h3>
-                        <p class="slds-text-body_small slds-text-color_weak">
-                            Nothing due today. The agent runs again tonight.
+                        <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                            {emptyDetail}
                         </p>
+                        <div class="slds-m-top_small">
+                            <lightning-button
+                                label="Reload to check again"
+                                onclick={handleRetry}
+                                disabled={isRefreshing}
+                            ></lightning-button>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -53,16 +104,19 @@
                     {headline}
                 </p>
                 <template for:each={rows} for:item="r">
-                    <button key={r.id} class="qrow" data-id={r.id} onclick={handleOpen}>
+                    <button key={r.id} class="qrow" data-id={r.id} data-object={r.objectApiName} onclick={handleOpen}>
                         <span class="qrow__rank">{r.rank}</span>
                         <span class="qrow__body">
                             <span class="qrow__name">{r.name}</span>
-                            <span class="qrow__meta">{r.company} &middot; score {r.score}</span>
+                            <span class="qrow__meta">{r.kind} &middot; {r.company} &middot; score {r.score}</span>
                             <span class="qrow__why">{r.whyNow}</span>
                         </span>
                         <span class={r.statusClass}>{r.status}</span>
                     </button>
                 </template>
+                <p class="slds-text-body_small slds-text-color_weak slds-p-horizontal_medium slds-p-vertical_x-small">
+                    Read at {checkedAt}. Open the top one; the panel walks you down the list from there.
+                </p>
             </template>
         </div>
     </article>

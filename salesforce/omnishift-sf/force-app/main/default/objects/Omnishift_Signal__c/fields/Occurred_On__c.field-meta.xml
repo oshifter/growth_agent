@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Occurred_On__c</fullName>
+    <label>Occurred On</label>
+    <type>Date</type>
+    <description>When the event happened, not when the provider reported it. Recency of the event is what carries the urgency.</description>
+</CustomField>
